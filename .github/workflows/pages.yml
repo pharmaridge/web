@@ -26,6 +26,7 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Inject Supabase public configuration
+        if: ${{ secrets.SUPABASE_URL != '' && secrets.SUPABASE_ANON_KEY != '' }}
         shell: bash
         run: |
           cat > supabase-config.js <<'EOF'
