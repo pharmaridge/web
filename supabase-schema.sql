@@ -2,6 +2,27 @@
 -- Run this in Supabase SQL Editor before enabling the admin portal.
 create extension if not exists "pgcrypto";
 
+create table if not exists public.site_settings (
+  key text primary key,
+  value text not null default '',
+  updated_at timestamptz not null default now()
+);
+
+alter table public.site_settings enable row level security;
+create policy "Public can read site settings" on public.site_settings
+  for select using (true);
+create policy "Authenticated admins manage site settings" on public.site_settings
+  for all to authenticated using (true) with check (true);
+
+insert into public.site_settings(key,value) values
+  ('contact_email','care@pharmaridge.com'),
+  ('contact_phone','+234 800 000 0000'),
+  ('head_office','Abuja, Nigeria'),
+  ('announcement','Pharmacy operations, brought into focus'),
+  ('essential_price','Custom'),
+  ('partner_price','Custom')
+on conflict (key) do nothing;
+
 create table if not exists public.client_showcase (
   id uuid primary key default gen_random_uuid(),
   name text not null check (char_length(name) between 2 and 120),

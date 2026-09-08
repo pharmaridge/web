@@ -177,3 +177,16 @@ SUPABASE_ANON_KEY=your-public-anon-key
 The Supabase anon key is designed to be exposed in a browser. Never put the Supabase service-role key in GitHub Pages, JavaScript, or the repository. The SQL policies are the security boundary.
 
 The current client showcase in `app.js` is retained as a local fallback for design preview, while `public-data.js` reads published client profiles from Supabase in production.
+
+## Changeable public site details
+
+After running the updated `supabase-schema.sql`, sign in at `/web/admin.html`. The **Public site settings** panel lets an authenticated administrator change:
+
+- Contact email
+- Contact number
+- Head office
+- Top announcement
+- Essential plan price
+- Partner plan price
+
+Changes are stored in Supabase and read by the public website. Do not edit these values in the browser developer tools; use the authenticated admin portal so the database remains the source of truth.
