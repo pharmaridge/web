@@ -190,3 +190,14 @@ After running the updated `supabase-schema.sql`, sign in at `/web/admin.html`. T
 - Partner plan price
 
 Changes are stored in Supabase and read by the public website. Do not edit these values in the browser developer tools; use the authenticated admin portal so the database remains the source of truth.
+
+## Video and document libraries
+
+Run `supabase-media-extension.sql` in Supabase SQL Editor to create:
+
+- `video_library` for YouTube videos
+- `resource_library` for Google Docs and other Google document links
+
+From the admin portal, choose **YouTube video** or **Google document link** in the content type selector. Enter a title, a dynamic category, the YouTube/Google URL and a description.
+
+Published videos appear in the public video library with YouTube key-frame thumbnails and play links. Categories become filter buttons automatically. Published documents appear in the resource library and open in a new tab.
