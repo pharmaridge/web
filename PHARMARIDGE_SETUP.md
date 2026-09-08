@@ -201,3 +201,17 @@ Run `supabase-media-extension.sql` in Supabase SQL Editor to create:
 From the admin portal, choose **YouTube video** or **Google document link** in the content type selector. Enter a title, a dynamic category, the YouTube/Google URL and a description.
 
 Published videos appear in the public video library with YouTube key-frame thumbnails and play links. Categories become filter buttons automatically. Published documents appear in the resource library and open in a new tab.
+
+## Website enquiries
+
+The contact form stores each enquiry in Supabase table `inquiries` with:
+
+- Email
+- Enquiry type
+- Message
+- Status (`new`, `in_progress`, `resolved`, `archived`)
+- Created and updated timestamps
+
+Run `supabase-inquiries.sql` in Supabase SQL Editor. Then open the admin portal and choose **Enquiries**. Admins can review, change status or delete enquiries.
+
+The public form does not expose private admin data. Visitors have insert-only access; only authenticated admins can read, update or delete the inbox. For email notifications, connect a Supabase Edge Function or an automation service such as Resend after the insert trigger.
