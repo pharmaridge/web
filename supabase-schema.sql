@@ -9,8 +9,10 @@ create table if not exists public.site_settings (
 );
 
 alter table public.site_settings enable row level security;
+drop policy if exists "Public can read site settings" on public.site_settings;
 create policy "Public can read site settings" on public.site_settings
   for select using (true);
+drop policy if exists "Authenticated admins manage site settings" on public.site_settings;
 create policy "Authenticated admins manage site settings" on public.site_settings
   for all to authenticated using (true) with check (true);
 
