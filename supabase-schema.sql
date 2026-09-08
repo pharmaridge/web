@@ -35,8 +35,10 @@ create table if not exists public.client_showcase (
 );
 
 alter table public.client_showcase enable row level security;
+drop policy if exists "Published client profiles are public" on public.client_showcase;
 create policy "Published client profiles are public" on public.client_showcase
   for select using (featured = true);
+drop policy if exists "Authenticated admins manage client profiles" on public.client_showcase;
 create policy "Authenticated admins manage client profiles" on public.client_showcase
   for all to authenticated using (true) with check (true);
 
@@ -44,12 +46,16 @@ insert into storage.buckets (id, name, public)
 values ('client-logos', 'client-logos', true)
 on conflict (id) do nothing;
 
+drop policy if exists "Public can view client logos" on storage.objects;
 create policy "Public can view client logos" on storage.objects
   for select using (bucket_id = 'client-logos');
+drop policy if exists "Admins can upload client logos" on storage.objects;
 create policy "Admins can upload client logos" on storage.objects
   for insert to authenticated with check (bucket_id = 'client-logos');
+drop policy if exists "Admins can update client logos" on storage.objects;
 create policy "Admins can update client logos" on storage.objects
   for update to authenticated using (bucket_id = 'client-logos');
+drop policy if exists "Admins can delete client logos" on storage.objects;
 create policy "Admins can delete client logos" on storage.objects
   for delete to authenticated using (bucket_id = 'client-logos');
 
