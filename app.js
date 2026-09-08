@@ -11,7 +11,7 @@ function render(){
 }
 function toggleAdmin(open){$('#admin-drawer').classList.toggle('open',open);$('.scrim').classList.toggle('show',open)}
 $$('.admin-open').forEach(b=>b.addEventListener('click',()=>toggleAdmin(true)));$('.close-admin').addEventListener('click',()=>toggleAdmin(false));$('.scrim').addEventListener('click',()=>toggleAdmin(false));
-$('#admin-form').addEventListener('submit',e=>{e.preventDefault();const form=new FormData(e.target);data=Object.fromEntries(form.entries());localStorage.setItem('pharmaridge',JSON.stringify(data));render();toggleAdmin(false);showToast('Changes saved — your public site is updated.')});
+$('#admin-form').addEventListener('submit',e=>{e.preventDefault();const form=new FormData(e.target);for(const k of Object.keys(defaults))data[k]=form.get(k)||'';localStorage.setItem('pharmaridge',JSON.stringify(data));render();toggleAdmin(false);showToast('Changes saved — your public site is updated.')});
 $('.reset-admin').addEventListener('click',()=>{data={...defaults};localStorage.removeItem('pharmaridge');render();showToast('Demo content restored.')});
 $('#contact-form').addEventListener('submit',e=>{e.preventDefault();e.target.reset();showToast('Thanks — your enquiry is on its way.')});
 function showToast(text){const t=$('#toast');t.textContent=text;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200)}
