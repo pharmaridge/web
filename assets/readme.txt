@@ -1,0 +1,1 @@
+Product screenshots extracted from the uploaded PharmaRidge Onboarding Guide PDF: login, dashboard, plan/modules, accounting ledger. Used in the public website showcase.
