@@ -1,0 +1,4 @@
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+const cfg=window.PHARMA_SUPABASE||{};
+if(cfg.url&&cfg.anonKey&&!cfg.url.includes('YOUR_PROJECT')){const db=createClient(cfg.url,cfg.anonKey);const {data}=await db.from('client_showcase').select('name,story,logo_url').eq('featured',true).order('sort_order').order('created_at',{ascending:false});if(data?.length){const track=document.querySelector('#client-track');if(track){track.innerHTML=data.map(c=>`<article class="client-card"><img src="${c.logo_url||'assets/pharmaridge-mark-source.png'}" alt="${String(c.name).replace(/"/g,'&quot;')} logo"><div><h3>${escapeHtml(c.name)}</h3><p>${escapeHtml(c.story||'Using PharmaRidge to run with clarity.')}</p></div></article>`).join('')}}}
+function escapeHtml(v){return String(v).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}

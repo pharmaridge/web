@@ -142,3 +142,38 @@ Do not use the current browser-only admin for real customer, pricing or client d
 - Server-side validation
 
 The current admin is suitable for design review and static-site demonstrations only.
+
+## 6. Production admin portal
+
+The production admin portal is available at:
+
+`https://pharmaridge.github.io/web/admin.html`
+
+It is powered by Supabase and supports:
+
+- Email/password authentication
+- Authenticated client management
+- Client logo uploads to Supabase Storage
+- Public client showcase publishing
+- Client removal
+- Row-level security policies
+
+### Supabase setup
+
+1. Create a Supabase project.
+2. Run `supabase-schema.sql` in the Supabase SQL Editor.
+3. In Supabase Authentication, create the first admin user under **Authentication → Users**.
+4. In the GitHub repository, open **Settings → Secrets and variables → Actions**.
+5. Add these repository secrets:
+
+```text
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your-public-anon-key
+```
+
+6. Push to `main` or manually run the Pages workflow.
+7. Open `/web/admin.html` and sign in with the Supabase admin user.
+
+The Supabase anon key is designed to be exposed in a browser. Never put the Supabase service-role key in GitHub Pages, JavaScript, or the repository. The SQL policies are the security boundary.
+
+The current client showcase in `app.js` is retained as a local fallback for design preview, while `public-data.js` reads published client profiles from Supabase in production.
