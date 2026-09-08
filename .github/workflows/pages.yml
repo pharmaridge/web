@@ -26,15 +26,14 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Inject Supabase public configuration
-        if: ${{ secrets.SUPABASE_URL != '' && secrets.SUPABASE_ANON_KEY != '' }}
         shell: bash
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-          cat > supabase-config.js <<'EOF'
-          window.PHARMA_SUPABASE = {
-            url: '${{ secrets.SUPABASE_URL }}',
-            anonKey: '${{ secrets.SUPABASE_ANON_KEY }}'
-          };
-          EOF
+          if [ -n "$SUPABASE_URL" ] && [ -n "$SUPABASE_ANON_KEY" ]; then
+            printf "window.PHARMA_SUPABASE = { url: '%s', anonKey: '%s' };\n" "$SUPABASE_URL" "$SUPABASE_ANON_KEY" > supabase-config.js
+          fi
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
