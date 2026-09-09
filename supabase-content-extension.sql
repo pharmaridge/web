@@ -33,6 +33,8 @@ create policy "Published partners are public" on public.partners for select usin
 drop policy if exists "Authenticated admins manage partners" on public.partners;
 create policy "Authenticated admins manage partners" on public.partners for all to authenticated using (true) with check (true);
 
+alter table if exists public.site_ads add column if not exists sort_order integer not null default 0;
+
 create table if not exists public.site_ads (
   id uuid primary key default gen_random_uuid(),
   title text not null,
@@ -41,6 +43,7 @@ create table if not exists public.site_ads (
   cta_label text,
   cta_url text,
   published boolean not null default true,
+  sort_order integer not null default 0,
   starts_at timestamptz,
   ends_at timestamptz,
   created_at timestamptz not null default now()
